@@ -58,6 +58,18 @@ SET STATEMENT sql_mode='NO_AUTO_VALUE_ON_ZERO' FOR
 \! echo "PIDs should be unique in the password table"
 CREATE UNIQUE INDEX `pid_password_unique` ON password(pid);
 
+-- Adding RADIUS radreply table
+
+CREATE TABLE radreply (
+  id int(11) unsigned NOT NULL auto_increment,
+  username varchar(64) NOT NULL default '',
+  attribute varchar(64) NOT NULL default '',
+  op char(2) NOT NULL DEFAULT '=',
+  value varchar(253) NOT NULL default '',
+  PRIMARY KEY  (id),
+  KEY username (username(32))
+);
+
 \! echo "Incrementing PacketFence schema version...";
 INSERT IGNORE INTO pf_version (id, version) VALUES (@VERSION_INT, CONCAT_WS('.', @MAJOR_VERSION, @MINOR_VERSION, @SUBMINOR_VERSION));
 
