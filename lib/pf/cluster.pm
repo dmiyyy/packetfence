@@ -763,6 +763,20 @@ sub all_find_server_by_hostname {
     return firstval { $_->{host} eq $hostname } @config_cluster_servers;
 }
 
+=head2 isSlaveMode
+
+Return if the cluster is in Slave mode
+
+=cut
+
+sub isSlaveMode {
+    my ($self) = @_;
+    if (defined($ConfigCluster{CLUSTER}{masterslavemode}) && $ConfigCluster{CLUSTER}{masterslavemode} eq 'SLAVE' ) {
+        return $TRUE;
+    }
+    return $FALSE;
+}
+
 =head1 AUTHOR
 
 Inverse inc. <info@inverse.ca>

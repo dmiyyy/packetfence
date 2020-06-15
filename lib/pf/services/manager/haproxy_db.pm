@@ -74,7 +74,7 @@ sub generateConfig {
 
     if ($cluster_enabled) {
         my $management_ip = pf::cluster::management_cluster_ip();
-        if ($self->isSlaveMode()) {
+        if (pf::cluster::isSlaveMode()) {
             if ($self->getDBMaster()) {
                  push(@mysql_backend, $self->getDBMaster());
             }
@@ -118,7 +118,7 @@ sub isManaged {
     my ($self) = @_;
     my $name = $self->name;
     if (isenabled($pf::config::Config{'services'}{$name})) {
-        if ($cluster_enabled && $self->isSlaveMode()) {
+        if ($cluster_enabled && pf::cluster::isSlaveMode()) {
             return $TRUE;
         }
         return $cluster_enabled;
@@ -127,19 +127,11 @@ sub isManaged {
     }
 }
 
-sub isSlaveMode {
-    my ($self) = @_;
-    if (defined(${pf::config::cluster::getClusterConfig($clusters_hostname_map{$host_id})}{CLUSTER}{masterslavemode}) && ${pf::config::cluster::getClusterConfig($clusters_hostname_map{$host_id})}{CLUSTER}{masterslavemode} eq 'SLAVE' ) {
-        return $TRUE;
-    }
-}
-
 sub getDBMaster {
     if (defined(${pf::config::cluster::getClusterConfig(${pf::config::cluster::getClusterConfig($clusters_hostname_map{$host_id})}{CLUSTER}{masterdb})}{CLUSTER}{management_ip})) {
         return ${pf::config::cluster::getClusterConfig(${pf::config::cluster::getClusterConfig($clusters_hostname_map{$host_id})}{CLUSTER}{masterdb})}{CLUSTER}{management_ip};
-    } else {
-        return $FALSE;
     }
+    return $FALSE;
 }
 
 =head1 AUTHOR
