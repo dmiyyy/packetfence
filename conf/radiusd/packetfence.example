@@ -572,9 +572,7 @@ server pf.degraded {
 
 		ntdomain
 
-		eap-remote {
-			ok = return
-		}
+		[% authorize_eap_choice %]
 
 		if ( !EAP-Message ) {
 			update {
@@ -606,7 +604,7 @@ server pf.degraded {
 
 		#
 		#  Allow EAP authentication.
-		eap-remote
+		[% authentication_auth_type %]
 	}
 
 
@@ -671,9 +669,8 @@ server packetfence-degraded-tunnel {
 		update control {
 			&Proxy-To-Realm := LOCAL
 		}
-		eap-remote {
-			ok = return
-		}
+
+[% authorize_eap_choice %]
 
 		rewrite_called_station_id
 
@@ -698,8 +695,8 @@ server packetfence-degraded-tunnel {
 			mschap
 		}
 
+[% authentication_auth_type %]
 
-		eap-remote
 	}
 
 	session {
