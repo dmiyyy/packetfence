@@ -22,9 +22,8 @@ has '+name' => (default => sub { 'galera-autofix' } );
 
 sub isManaged {
     my ($self) = @_;
-    return $self->SUPER::isManaged() && $cluster_enabled;
+    return $self->SUPER::isManaged() && $cluster_enabled && !pf::cluster::isSlaveMode();
 }
-
 
 =head1 AUTHOR
 
