@@ -72,6 +72,10 @@ Feel free to fork our [github repository](https://github.com/inverse-inc/packetf
 
 Most of the development happens in branches. Once ready for integration into [devel](https://github.com/inverse-inc/packetfence/tree/devel), a pull request is opened and a code review takes place. See the list of [all branches in the works](https://github.com/inverse-inc/packetfence/branches).
 
+## Build
+make -C html/pfappserver/root/static.alt/ light-dist
+npm run build
+
 ## Translations
 
 PacketFence is available in various languages. The following list describes the official translations alongside their maintainers:
